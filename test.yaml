@@ -1,0 +1,410 @@
+swagger: '2.0'
+info:
+  title: pin-scene
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /scene/pin:
+    post:
+      summary: ''
+      operationId: post-scene-pin
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: ./pin-map.yaml#/components/schemas/Id
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IBackgroundSceneReq'
+            examples: {}
+        description: ''
+    parameters: []
+  '/scene/background/{id}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackgroundSceneReq'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-scene-background
+    put:
+      summary: ''
+      operationId: put-scene-background
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    patch:
+      summary: ''
+      operationId: patch-scene-background
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+    delete:
+      summary: ''
+      operationId: delete-scene-background-id
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  '/scene/pin/{id}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PinScene'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-scene-pin
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-scene-pin-id
+      responses:
+        '200':
+          description: OK
+    patch:
+      summary: ''
+      operationId: patch-scene-pin-id
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-scene-pin-id
+      responses:
+        '200':
+          description: OK
+  /scene/background:
+    post:
+      summary: ''
+      operationId: post-scene-background
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    ISizeBgScene:
+      title: ISizeBgScene
+      type: object
+      properties:
+        width:
+          type: number
+        height:
+          type: number
+      required:
+        - width
+        - height
+    IBgImageScene:
+      title: IBgImageScene
+      type: object
+      properties:
+        iconUrl:
+          type: string
+        iconSize:
+          $ref: '#/components/schemas/ISizeBgScene'
+      required:
+        - iconUrl
+        - iconSize
+    ICoordsScene:
+      title: ICoordsScene
+      type: object
+      properties:
+        x:
+          type: number
+        'y':
+          type: number
+      required:
+        - x
+        - 'y'
+    IBackgroundScene:
+      title: IBackgroundScene
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          $ref: '#/components/schemas/IBgImageScene'
+        color:
+          type: string
+        isPannable:
+          type: boolean
+        isZoomable:
+          type: boolean
+        position:
+          $ref: '#/components/schemas/ICoordsScene'
+        type:
+          type: string
+        id_temp:
+          type: string
+    ISelectType:
+      title: ISelectType
+      type: object
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      required:
+        - label
+        - value
+    IFormatText:
+      title: IFormatText
+      type: object
+      properties:
+        fontFamily:
+          type: string
+        fontSize:
+          type: string
+        color:
+          type: string
+        hasBgColor:
+          type: string
+        bgColor:
+          type: string
+        opacity:
+          type: string
+        fontWeight:
+          type: string
+          enum:
+            - normal
+            - bold
+        fontStyle:
+          type: string
+          enum:
+            - normal
+            - italic
+        underline:
+          type: boolean
+        charSpacing:
+          type: string
+      required:
+        - fontFamily
+        - fontSize
+        - color
+        - hasBgColor
+        - bgColor
+        - opacity
+        - fontWeight
+        - fontStyle
+        - underline
+        - charSpacing
+      x-examples:
+        example-1:
+          fontFamily: string
+          fontSize: string
+          color: string
+          hasBgColor: string
+          bgColor: string
+          opacity: string
+          fontWeight: normal
+          fontStyle: normal
+          underline: true
+          charSpacing: string
+    ISizePinScene:
+      title: ISizePinScene
+      type: object
+      properties:
+        width:
+          type: number
+        height:
+          type: number
+      required:
+        - width
+        - height
+    ISprite:
+      title: ISprite
+      type: object
+      properties:
+        fps:
+          type: number
+        size:
+          $ref: '#/components/schemas/ISizePinScene'
+      required:
+        - fps
+    IImageScene:
+      title: IImageScene
+      type: object
+      properties:
+        iconUrl:
+          type: string
+        iconSize:
+          $ref: '#/components/schemas/ISizePinScene'
+        sprite:
+          $ref: '#/components/schemas/ISprite'
+      required:
+        - iconUrl
+        - iconSize
+    IPinScene:
+      title: IPinScene
+      type: object
+      properties:
+        position:
+          $ref: '#/components/schemas/ICoordsScene'
+        image:
+          $ref: '#/components/schemas/IImageScene'
+        hasTextPin:
+          type: boolean
+        textPin:
+          type: string
+        formatText:
+          $ref: '#/components/schemas/IFormatText'
+        name:
+          type: string
+        type:
+          type: string
+        color:
+          type: string
+        filter:
+          type: string
+        isAnimated:
+          type: boolean
+        animation:
+          type: string
+        acl:
+          type: string
+        action:
+          type: string
+        category:
+          type: number
+        subCategory:
+          type: number
+        maxWidth:
+          type: number
+        maxHeight:
+          type: number
+        isBookmark:
+          type: boolean
+        id_temp:
+          type: string
+    Id:
+      title: Id
+      type: object
+      properties:
+        _id:
+          type: string
+    PinScene:
+      title: PinScene
+      allOf:
+        - $ref: '#/components/schemas/Id'
+        - $ref: '#/components/schemas/IPinScene'
+    BackgroundScene:
+      allOf:
+        - $ref: '#/components/schemas/Id'
+        - $ref: '#/components/schemas/IBackgroundScene'
+      title: ''
+    IBackgroundSceneReq:
+      title: IBackgroundSceneReq
+      type: object
+      properties:
+        name:
+          type: string
+        position:
+          $ref: '#/components/schemas/ICoordsScene'
+        type:
+          type: string
+      required:
+        - name
+        - position
+        - type
+    BackgroundSceneReq:
+      allOf:
+        - $ref: '#/components/schemas/BackgroundScene'
+        - $ref: '#/components/schemas/IBackgroundSceneReq'
+      x-examples:
+        example-1:
+          _id: string
+          name: string
+          image:
+            iconUrl: string
+            iconSize:
+              width: 0
+              height: 0
+          color: string
+          isPannable: true
+          isZoomable: true
+          position:
+            x: 0
+            'y': 0
+          type: string
+          id_temp: string
